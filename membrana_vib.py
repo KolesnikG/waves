@@ -2,15 +2,13 @@ import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.mlab as mlab
 import matplotlib.pyplot as plt
-from scipy.stats import multivariate_normal
 import matplotlib.animation as animation
 
 fig = plt.figure()
 ax=fig.gca(projection='3d')
 
 def q(x, y):
-    g = mlab.bivariate_normal(x, y)
-    return g
+    return mlab.bivariate_normal(x, y)
  
 def plot_q():
     X = np.arange(-5, 5, 0.1)
@@ -25,13 +23,13 @@ N=100
 T=np.zeros((50*N,N,N))
 T[0]=T[1]=Z
 
-dx=0.1;dt=0.05
-r=(dt/dx)**2
+dh=0.1;dt=0.05
+c=(dt/dh)**2
 
 for t in range(2,50*N-1):
     for j in range(0,N-1):
         for i in range(0,N-1):
-            T[t][i][j]=2*T[t-1][i][j]-T[t-2][i][j]+r*(T[t-1][i+1][j]+T[t-1][i-1][j]+T[t-1][i][j+1]+T[t-1][i][j-1]
+            T[t][i][j]=2*T[t-1][i][j]-T[t-2][i][j]+c*(T[t-1][i+1][j]+T[t-1][i-1][j]+T[t-1][i][j+1]+T[t-1][i][j-1]
                                                        -4*T[t-1][i][j])
 print('OK')
 
