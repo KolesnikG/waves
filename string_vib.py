@@ -9,8 +9,8 @@ ax1 = fig.add_subplot(1,1,1)
 n=11
 
 def Data():
-    global N
-    n=N;x=0.1;m=1000;t=0.05
+    global n
+    x=0.1;m=1000;t=0.05
     a=1;l=(a*t/x)**2
     
     U=[0]*n
