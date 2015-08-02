@@ -15,7 +15,7 @@ B=np.array([jn_zeros(0,5)])
 m=0;k=0
 def animation(t):
     global m,k
-    if t>k*m*6.30 and m<4:
+    if t>k*6.30 and m<4:
         m+=1;k+=1
     
     z = jn(0,B[0,m]*r/radius)*np.sin(t)
