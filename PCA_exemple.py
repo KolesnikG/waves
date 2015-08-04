@@ -9,8 +9,8 @@ from mpl_toolkits.mplot3d import proj3d
 
 np.random.seed(1)
 
-steps = 1000
-tr=20
+steps = 4000
+tr=25
 
 def lorenz(x, y, z, s=10, r=28, b=8./3, dt=0.01) :
     x_dot =x + (s*(y - x))*dt
@@ -51,9 +51,9 @@ def CalculateVectors(U,k):
     eig_val_sc, eig_vec_sc = np.linalg.eig(scatter_matrix)
     
     for v in eig_vec_sc.T:
-        a = Arrow3D([0,v[0]+ mean_x], 
-                    [0,v[1]+ mean_y], 
-                    [0,v[2]+ mean_z], mutation_scale=20, lw=1, arrowstyle="-|>", color="r")
+        a = Arrow3D([0,10*v[0]+ mean_x], 
+                    [0,10*v[1]+ mean_y], 
+                    [0,10*v[2]+ mean_z], mutation_scale=20, lw=1, arrowstyle="-|>", color="r")
         
         ax.add_artist(a)
 
@@ -69,12 +69,12 @@ def animat(t):
     ax.scatter(U[k,:,0], U[k,:,1], U[k,:,2],c='r')
     
     ax.set_zlim(0,60)
-    ax.set_ylim(-30,30)
-    ax.set_xlim(-30,30)
+    ax.set_ylim(-25,25)
+    ax.set_xlim(-19,19)
     
     k+=1
     
-anim = animation.FuncAnimation(fig, animat, frames=500,interval=5)
+anim = animation.FuncAnimation(fig, animat, frames=steps-1,interval=5)
 anim.save('lorenz.mp4', dpi=100, bitrate=163840, fps=30)
 #plt.show(anim)
 print('OK')
