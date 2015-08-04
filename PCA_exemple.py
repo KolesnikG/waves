@@ -1,8 +1,6 @@
 import numpy as np
-from scipy import integrate
 from matplotlib import pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-from matplotlib.colors import cnames
 from matplotlib import animation
 from matplotlib.patches import FancyArrowPatch
 from mpl_toolkits.mplot3d import proj3d
