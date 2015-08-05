@@ -6,9 +6,16 @@ from matplotlib.patches import FancyArrowPatch
 from mpl_toolkits.mplot3d import proj3d
 
 np.random.seed(1)
-
+#initialization
 steps = 4000
 tr=25
+
+scatter_matrix = np.zeros((3,3))
+U=np.zeros((steps,tr,3))
+
+#inital condition
+U[0]=-15+30*np.random.random((tr,3))
+
 
 def lorenz(x, y, z, s=10, r=28, b=8./3, dt=0.01) :
     x_dot =x + (s*(y - x))*dt
@@ -16,16 +23,16 @@ def lorenz(x, y, z, s=10, r=28, b=8./3, dt=0.01) :
     z_dot =z + (x*y - b*z)*dt
     return x_dot, y_dot, z_dot
 
-scatter_matrix = np.zeros((3,3))
-U=np.zeros((steps,tr,3))
-U[0]=-15+30*np.random.random((tr,3))
+
+#full data
 for i in range(0,steps-1):
     for j in range(0,tr):
         x_dot, y_dot, z_dot = lorenz(U[i][j][0], U[i][j][1], U[i][j][2])
         U[i+1][j][0] = x_dot
         U[i+1][j][1] = y_dot 
         U[i+1][j][2] = z_dot
-        
+
+#Draw vectors
 class Arrow3D(FancyArrowPatch):
     def __init__(self, xs, ys, zs, *args, **kwargs):
         FancyArrowPatch.__init__(self, (0,0), (0,0), *args, **kwargs)
@@ -36,7 +43,8 @@ class Arrow3D(FancyArrowPatch):
       xs, ys, zs = proj3d.proj_transform(xs3d, ys3d, zs3d, renderer.M)
       self.set_positions((xs[0],ys[0]),(xs[1],ys[1]))
       FancyArrowPatch.draw(self, renderer)
-      
+
+
 def CalculateVectors(U,k):
     global scatter_matrix
     mean_x=np.mean(U[k,:,0])
@@ -54,6 +62,7 @@ def CalculateVectors(U,k):
                     [0,10*v[2]+ mean_z], mutation_scale=20, lw=1, arrowstyle="-|>", color="r")
         
         ax.add_artist(a)
+
 
 fig = plt.figure()
 ax=fig.gca(projection='3d')
