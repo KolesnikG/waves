@@ -10,12 +10,15 @@ np.random.seed(1)
 steps = 3000
 tr=25
 
+scatter_matrix = np.zeros((3,3))
+U=np.zeros((steps,tr,3))
+
 def lorenz(x, y, z, s=10, r=28, b=8./3, dt=0.01) :
     return [x + (s*(y - x))*dt, y + (r*x - y - x*z)*dt, z + (x*y - b*z)*dt]
 
-scatter_matrix = np.zeros((3,3))
-U=np.zeros((steps,tr,3))
+
 U[0]=-15+30*np.random.random((tr,3))
+
 for i in range(0,steps-1):
     for j in range(0,tr):
         U[i+1][j][0], U[i+1][j][1], U[i+1][j][2]=lorenz(U[i][j][0], U[i][j][1], U[i][j][2]) 
