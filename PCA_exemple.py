@@ -33,6 +33,20 @@ class DrawVectors(FancyArrowPatch):
         xs, ys, zs = proj3d.proj_transform(xs3d, ys3d, zs3d, renderer.M)
         self.set_positions((xs[0],ys[0]),(xs[1],ys[1]))
         FancyArrowPatch.draw(self, renderer)
+
+def CalculateVectors(U):
+    global scatter_matrix
+    mean_vector = np.array([[np.mean(U[:,0])],[np.mean(U[:,1])],[np.mean(U[:,2])]])
+    for i in range(tr):
+        scatter_matrix += (U[i,:].reshape(3,1) - mean_vector).dot((U[i,:].reshape(3,1) - mean_vector).T)
+
+    eig_val_sc, eig_vec_sc = np.linalg.eig(scatter_matrix)
+    for v in eig_vec_sc.T:
+        a = DrawVectors([0,10*v[0]+mean_vector[0]], 
+                        [0,10*v[1]+mean_vector[1]], 
+                        [0,10*v[2]+mean_vector[2]], mutation_scale=20, lw=1, arrowstyle="-|>", color="c")
+        
+        ax.add_artist(a)
         
 fig = plt.figure()
 ax=fig.gca(projection='3d')
